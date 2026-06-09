@@ -46,6 +46,15 @@ Customer churn refers to customers discontinuing a company's service. This proje
 * Streamlit Dashboard
 * Cloud Deployment
 
+## Live Demo
+
+Streamlit App:
+https://customer-churn-prediction-ml-fkr6kauxknv2rrb5tprsvz.streamlit.app/
+
+GitHub Repository:
+https://github.com/keshav323/customer-churn-prediction-ml
+
+
 ## Author
 
 Keshav Saini
