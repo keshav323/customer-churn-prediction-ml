@@ -1,6 +1,7 @@
 import streamlit as st
 import joblib
 import pandas as pd
+import io
 
 # Load model
 model = joblib.load("models/gui_model.pkl")
@@ -158,6 +159,30 @@ if st.button("🚀 Predict Churn"):
 
 # Analytics Section
 st.divider()
+report = pd.DataFrame(
+        {
+            "Tenure": [tenure],
+            "Monthly Charges": [monthly],
+            "Total Charges": [total],
+            "Prediction": [
+                "High Risk Customer"
+                if prediction == 1
+                else "Low Risk Customer"
+            ],
+            "Churn Probability (%)": [
+                round(probability * 100, 2)
+            ]
+        }
+    )
+
+csv = report.to_csv(index=False)
+
+st.download_button(
+        label="📥 Download Prediction Report",
+        data=csv,
+        file_name="customer_churn_report.csv",
+        mime="text/csv"
+    )
 
 st.subheader("📊 Dataset Insights")
 
