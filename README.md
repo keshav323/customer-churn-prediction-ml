@@ -64,15 +64,6 @@ This project predicts whether a customer is likely to discontinue a company's se
 
 ---
 
-## Live Demo
-
-Streamlit App:
-https://customer-churn-prediction-ml-fkr6kauxknv2rrb5tprsvz.streamlit.app/
-
-GitHub Repository:
-https://github.com/keshav323/customer-churn-prediction-ml
-
-
 ## Author
 
 Keshav Saini
