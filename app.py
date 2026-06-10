@@ -51,6 +51,10 @@ st.image(
 
 st.title("📊 Customer Churn Analytics Dashboard")
 
+st.success(
+    "🚀 Live Machine Learning Dashboard Deployed on Streamlit Cloud"
+)
+
 st.markdown("""
 Predict whether a customer is likely to leave the company using Machine Learning.
 """)
@@ -99,31 +103,26 @@ if st.button("🚀 Predict Churn"):
 
     m1, m2, m3 = st.columns(3)
 
-    with m1:
-        st.metric(
-            "Churn Probability",
-            f"{probability*100:.2f}%"
-        )
 
-    with m2:
-        st.metric(
-            "Model Accuracy",
-            "77%"
-        )
+with m1:
+    st.metric(
+        "Records",
+        "7043"
+    )
 
-    with m3:
-        if prediction == 1:
-            st.metric(
-                "Risk Level",
-                "HIGH"
-            )
-        else:
-            st.metric(
-                "Risk Level",
-                "LOW"
-            )
+with m2:
+    st.metric(
+        "Features",
+        "20"
+    )
 
-    st.divider()
+with m3:
+    st.metric(
+        "Algorithm",
+        "Random Forest"
+    )
+
+st.divider()
 
     st.subheader("📈 Risk Visualization")
 
@@ -151,6 +150,36 @@ if st.button("🚀 Predict Churn"):
 
 st.divider()
 
+st.subheader("📊 Dataset Insights")
+
+tab1, tab2, tab3 = st.tabs(
+    [
+        "Churn Distribution",
+        "Feature Importance",
+        "Confusion Matrix"
+    ]
+)
+
+with tab1:
+    st.image(
+        "screenshots/churn_distribution.png",
+        use_container_width=True
+    )
+
+with tab2:
+    st.image(
+        "screenshots/feature_importance.png",
+        use_container_width=True
+    )
+
+with tab3:
+    st.image(
+        "screenshots/confusion_matrix.png",
+        use_container_width=True
+    )
+
+st.divider()
+
 st.caption(
-    "Built using Python, Streamlit, Scikit-Learn, Pandas, and Random Forest Classification."
+    "Built using Python, Streamlit, Scikit-Learn, Pandas, Matplotlib, Seaborn, and Random Forest Classification."
 )
