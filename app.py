@@ -5,22 +5,59 @@ import pandas as pd
 # Load model
 model = joblib.load("models/gui_model.pkl")
 
-# Page settings
 st.set_page_config(
     page_title="Customer Churn Analytics",
     page_icon="📊",
     layout="wide"
 )
 
-# Header
-st.title("📊 Customer Churn Analytics Dashboard")
-st.markdown(
-    "Predict whether a customer is likely to leave the company using Machine Learning."
+st.sidebar.title("📋 Project Information")
+
+st.sidebar.markdown("""
+### Model Details
+
+- Algorithm: Random Forest
+- Accuracy: 77%
+- Features Used:
+  - Tenure
+  - Monthly Charges
+  - Total Charges
+
+### Author
+Keshav Saini
+""")
+
+# Custom Styling
+st.markdown("""
+<style>
+.main {
+    padding-top: 1rem;
+}
+
+.metric-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.image(
+    "customer_churn_logo.png",
+    width = 120
 )
+
+st.title("📊 Customer Churn Analytics Dashboard")
+
+st.markdown("""
+Predict whether a customer is likely to leave the company using Machine Learning.
+""")
 
 st.divider()
 
-# Input Section
+# Inputs
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -44,10 +81,8 @@ with col3:
         value=500.0
     )
 
-# Prediction Button
-if st.button("Predict Churn"):
+if st.button("🚀 Predict Churn"):
 
-    # Create DataFrame with correct feature names
     data = pd.DataFrame(
         [[tenure, monthly, total]],
         columns=[
@@ -62,47 +97,60 @@ if st.button("Predict Churn"):
 
     st.divider()
 
-    # Metrics Section
-    metric1, metric2 = st.columns(2)
+    m1, m2, m3 = st.columns(3)
 
-    with metric1:
+    with m1:
         st.metric(
-            label="Churn Probability",
-            value=f"{probability * 100:.2f}%"
+            "Churn Probability",
+            f"{probability*100:.2f}%"
         )
 
-    with metric2:
+    with m2:
         st.metric(
-            label="Model Accuracy",
-            value="77%"
+            "Model Accuracy",
+            "77%"
         )
+
+    with m3:
+        if prediction == 1:
+            st.metric(
+                "Risk Level",
+                "HIGH"
+            )
+        else:
+            st.metric(
+                "Risk Level",
+                "LOW"
+            )
 
     st.divider()
 
-    # Result Section
+    st.subheader("📈 Risk Visualization")
+
+    st.progress(float(probability))
+
     if prediction == 1:
 
         st.error(
-            f"⚠ HIGH RISK CUSTOMER ({probability * 100:.2f}%)"
+            f"⚠ High Risk Customer ({probability*100:.2f}%)"
         )
 
         st.warning(
-            "Recommendation: Offer discounts, retention benefits, or personalized support."
+            "Recommendation: Offer discounts, loyalty rewards, or personalized support."
         )
 
     else:
 
         st.success(
-            f"✅ LOW RISK CUSTOMER ({probability * 100:.2f}%)"
+            f"✅ Low Risk Customer ({probability*100:.2f}%)"
         )
 
         st.info(
-            "Recommendation: Customer is likely to stay with the company."
+            "Recommendation: Customer is likely to remain with the company."
         )
 
-# Footer
 st.divider()
 
 st.caption(
-    "Built using Python, Scikit-Learn, Streamlit, Pandas, and Random Forest Classification."
+    "Built using Python, Streamlit, Scikit-Learn, Pandas, and Random Forest Classification."
 )
