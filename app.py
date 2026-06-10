@@ -5,12 +5,14 @@ import pandas as pd
 # Load model
 model = joblib.load("models/gui_model.pkl")
 
+# Page Config
 st.set_page_config(
-    page_title="Customer Churn Analytics",
+    page_title="Customer Churn Analytics Dashboard",
     page_icon="📊",
     layout="wide"
 )
 
+# Sidebar
 st.sidebar.title("📋 Project Information")
 
 st.sidebar.markdown("""
@@ -27,41 +29,47 @@ st.sidebar.markdown("""
 Keshav Saini
 """)
 
-# Custom Styling
+# Custom CSS
 st.markdown("""
 <style>
 .main {
     padding-top: 1rem;
 }
-
-.metric-card {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-}
 </style>
 """, unsafe_allow_html=True)
 
-st.image(
-    "customer_churn_logo.png",
-    width = 120
-)
+# Logo
+try:
+    st.image("customer_churn_logo.png", width=120)
+except:
+    pass
 
+# Title
 st.title("📊 Customer Churn Analytics Dashboard")
 
 st.success(
     "🚀 Live Machine Learning Dashboard Deployed on Streamlit Cloud"
 )
 
-st.markdown("""
-Predict whether a customer is likely to leave the company using Machine Learning.
-""")
+st.markdown(
+    "Predict whether a customer is likely to leave the company using Machine Learning."
+)
+
+# Top Metrics
+m1, m2, m3 = st.columns(3)
+
+with m1:
+    st.metric("Records", "7043")
+
+with m2:
+    st.metric("Features", "20")
+
+with m3:
+    st.metric("Algorithm", "Random Forest")
 
 st.divider()
 
-# Inputs
+# Input Section
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -85,6 +93,7 @@ with col3:
         value=500.0
     )
 
+# Prediction
 if st.button("🚀 Predict Churn"):
 
     data = pd.DataFrame(
@@ -101,28 +110,27 @@ if st.button("🚀 Predict Churn"):
 
     st.divider()
 
-    m1, m2, m3 = st.columns(3)
+    k1, k2, k3 = st.columns(3)
 
+    with k1:
+        st.metric(
+            "Churn Probability",
+            f"{probability*100:.2f}%"
+        )
 
-with m1:
-    st.metric(
-        "Records",
-        "7043"
-    )
+    with k2:
+        st.metric(
+            "Model Accuracy",
+            "77%"
+        )
 
-with m2:
-    st.metric(
-        "Features",
-        "20"
-    )
+    with k3:
+        st.metric(
+            "Risk Level",
+            "HIGH" if prediction == 1 else "LOW"
+        )
 
-with m3:
-    st.metric(
-        "Algorithm",
-        "Random Forest"
-    )
-
-st.divider()
+    st.divider()
 
     st.subheader("📈 Risk Visualization")
 
@@ -148,6 +156,7 @@ st.divider()
             "Recommendation: Customer is likely to remain with the company."
         )
 
+# Analytics Section
 st.divider()
 
 st.subheader("📊 Dataset Insights")
