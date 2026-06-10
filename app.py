@@ -1,7 +1,6 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import io
 
 # Load model
 model = joblib.load("models/gui_model.pkl")
@@ -94,7 +93,7 @@ with col3:
         value=500.0
     )
 
-# Prediction
+# Prediction Section
 if st.button("🚀 Predict Churn"):
 
     data = pd.DataFrame(
@@ -116,7 +115,7 @@ if st.button("🚀 Predict Churn"):
     with k1:
         st.metric(
             "Churn Probability",
-            f"{probability*100:.2f}%"
+            f"{probability * 100:.2f}%"
         )
 
     with k2:
@@ -140,7 +139,7 @@ if st.button("🚀 Predict Churn"):
     if prediction == 1:
 
         st.error(
-            f"⚠ High Risk Customer ({probability*100:.2f}%)"
+            f"⚠ High Risk Customer ({probability * 100:.2f}%)"
         )
 
         st.warning(
@@ -150,16 +149,17 @@ if st.button("🚀 Predict Churn"):
     else:
 
         st.success(
-            f"✅ Low Risk Customer ({probability*100:.2f}%)"
+            f"✅ Low Risk Customer ({probability * 100:.2f}%)"
         )
 
         st.info(
             "Recommendation: Customer is likely to remain with the company."
         )
 
-# Analytics Section
-st.divider()
-report = pd.DataFrame(
+    # Download Report
+    st.divider()
+
+    report = pd.DataFrame(
         {
             "Tenure": [tenure],
             "Monthly Charges": [monthly],
@@ -175,14 +175,17 @@ report = pd.DataFrame(
         }
     )
 
-csv = report.to_csv(index=False)
+    csv = report.to_csv(index=False)
 
-st.download_button(
+    st.download_button(
         label="📥 Download Prediction Report",
         data=csv,
         file_name="customer_churn_report.csv",
         mime="text/csv"
     )
+
+# Analytics Section
+st.divider()
 
 st.subheader("📊 Dataset Insights")
 
